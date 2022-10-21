@@ -1,7 +1,7 @@
 import openai
 from api_key import API_KEY
 import streamlit as st
-openai.api_key = st.secret'API_KEY'
+openai.api_key = st.secrets["API_KEY"]
 
 def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as infile:
