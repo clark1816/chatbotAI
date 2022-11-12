@@ -5,4 +5,3 @@ ffmpeg==1.4
 ffmpeg-python==0.2.0
 wavio==0.0.4
 sounddevice==0.4.5
-libportaudio2
