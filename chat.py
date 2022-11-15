@@ -64,13 +64,7 @@ def recrod_function():
 
             
 
-if option == 'AI Translator': 
-    record = st.button('press to record for translation')
-    if record == True:
-        recrod_function()
-        model = whisper.load_model("base")
-        out = model.transcribe('myvoice.mp3', language='en')
-        print(out['text'])
+
 
 
         
