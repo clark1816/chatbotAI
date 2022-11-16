@@ -1,11 +1,14 @@
 import openai
-from api_key import API_KEY
-import streamlit as st
-import sounddevice as sd
-import wavio
 import whisper
+from api_key import API_KEY
 
-openai.api_key = st.secrets["API_KEY"]
+import os
+import numpy as np
+import streamlit as st
+from io import BytesIO
+import streamlit.components.v1 as components
+
+openai.api_key = API_KEY
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
@@ -46,31 +49,43 @@ if option == 'Chat Helper Bot Ai':
         st.write('AI:',response)
         conversation.append('AI: %s' % response)
         
-def recrod_function():
-    with st.empty():
-        if record == True:
-            st.write("Recording...")
-            duration = 5  # seconds
-            fs = 48000
-            sd.default.samplerate = fs
-            sd.default.channels = 1
-            myrecording = sd.rec(int(duration * fs))
-            sd.wait(duration)
-            print("Saving sample as myvoice.mp3")
-            path_myrecording = "myvoice.mp3"
-            wavio.write(path_myrecording, myrecording, fs, sampwidth=2)
-            sd.play(myrecording, fs) #st
-            st.write("Done! Saved sample as myvoice.mp3")
-
-            
+        
 
 if option == 'AI Translator': 
     record = st.button('press to record for translation')
-    if record == True:
-        recrod_function()
-        model = whisper.load_model("base")
-        out = model.transcribe('myvoice.mp3', language='en')
-        print(out['text'])
+
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    # Custom REACT-based component for recording client audio in browser
+    build_dir = os.path.join(parent_dir, "st_audiorec/frontend/build")
+    # specify directory and initialize st_audiorec object functionality
+    st_audiorec = components.declare_component("st_audiorec", path=build_dir)
+
+    # TITLE and Creator information
+    st.title('streamlit audio recorder')
+    st.write('\n\n')
+
+
+    # STREAMLIT AUDIO RECORDER Instance
+    val = st_audiorec()
+    # web component returns arraybuffer from WAV-blob
+    st.write('Audio data received in the Python backend will appear below this message ...')
+
+    if isinstance(val, dict):  # retrieve audio data
+        with st.spinner('retrieving audio-recording...'):
+            ind, val = zip(*val['arr'].items())
+            ind = np.array(ind, dtype=int)  # convert to np array
+            val = np.array(val)             # convert to np array
+            sorted_ints = val[ind]
+            stream = BytesIO(b"".join([int(v).to_bytes(1, "big") for v in sorted_ints]))
+            wav_bytes = stream.read()
+
+        # wav_bytes contains audio data in format to be further processed
+        # display audio data as received on the Python side
+        st.audio(wav_bytes, format='audio/wav')
+    # if record == True:
+    #     model = whisper.load_model("base")
+    #     out = model.transcribe('myvoice.mp3', language='en')
+    #     st.write(out['text'])
 
 
         
