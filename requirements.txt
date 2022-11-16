@@ -1,8 +1,0 @@
-streamlit==1.2.0
-openai== 0.2.3
-git+https://github.com/openai/whisper.git
-ffmpeg==1.4
-ffmpeg-python==0.2.0
-wavio==0.0.4
-sounddevice==0.4.5
-scipy==1.8.1
