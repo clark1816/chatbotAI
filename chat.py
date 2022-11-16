@@ -8,7 +8,7 @@ import streamlit as st
 from io import BytesIO
 import streamlit.components.v1 as components
 
-openai.api_key = API_KEY
+openai.api_key = st.secrets["API_KEY"]
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
