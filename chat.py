@@ -82,10 +82,10 @@ if option == 'AI Translator':
         # wav_bytes contains audio data in format to be further processed
         # display audio data as received on the Python side
         st.audio(wav_bytes, format='audio/wav')
-    # if record == True:
-    #     model = whisper.load_model("base")
-    #     out = model.transcribe('myvoice.mp3', language='en')
-    #     st.write(out['text'])
+    if record == True:
+        model = whisper.load_model("base")
+        out = model.transcribe('myvoice.mp3', language='en')
+        st.write(out['text'])
 
 
         
