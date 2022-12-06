@@ -47,6 +47,7 @@ if option == 'Chat Helper Bot Ai':
         prompt = prompt + '\nAI:'
         response = gpt3_completion(prompt)
         st.write('AI:',response)
+        st.image(response)
         conversation.append('AI: %s' % response)
         
         
