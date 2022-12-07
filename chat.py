@@ -44,7 +44,7 @@ if option == 'Chat Helper Bot Ai':
         #this line is basically a list comprehesion
         text_block = '\n'.join(conversation)
         prompt = open_file('prompt_chat.txt').replace('<<BLOCK>>', text_block)
-        prompt = prompt + '\n Jesus:'
+        prompt = prompt + '\nAI:'
         response = gpt3_completion(prompt)
         st.write('AI:',response)
         st.image(response)
@@ -79,10 +79,10 @@ if option == 'Jesus Ai':
         #this line is basically a list comprehesion
         text_block = '\n'.join(conversation)
         prompt = open_file('jesus_prompt_chat.txt').replace('<<BLOCK>>', text_block)
-        prompt = prompt + '\nAI:'
+        prompt = prompt + '\n Jesus:'
         response = gpt3_completion(prompt)
-        st.write('AI:',response)
-        conversation.append('AI: %s' % response)
+        st.write('Jesus:',response)
+        conversation.append('Jesus: %s' % response)
         
         
 
