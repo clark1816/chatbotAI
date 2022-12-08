@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 
 openai.api_key = st.secrets["API_KEY"]
 
-option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','Jesus Ai','AI Translator'),0)
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
     st.header(option)
     st.write('The current home for all things AI since other website has decided to shit the bed.')
