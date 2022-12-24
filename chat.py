@@ -14,6 +14,9 @@ option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','
 if option == 'Home':
     st.header(option)
     st.write('The current home for all things AI since other website has decided to shit the bed.')
+    st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit. The AI translator is a work in progress and will be updated as I learn more about AI and Streamlit.')
+    st.subheader('Earning call currently working')
+    
 
 if option == 'Chat Helper Bot Ai':
     st.header(option)
@@ -52,7 +55,6 @@ if option == 'Chat Helper Bot Ai':
         
 
 if option == 'AI Translator': 
-    record = st.button('press to record for translation')
 
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     # Custom REACT-based component for recording client audio in browser
@@ -78,10 +80,16 @@ if option == 'AI Translator':
             sorted_ints = val[ind]
             stream = BytesIO(b"".join([int(v).to_bytes(1, "big") for v in sorted_ints]))
             wav_bytes = stream.read()
+            
+
 
         # wav_bytes contains audio data in format to be further processed
         # display audio data as received on the Python side
         st.audio(wav_bytes, format='audio/wav')
+        
+        
+        
+        
     # if record == True:
     #     model = whisper.load_model("base")
     #     out = model.transcribe('myvoice.mp3', language='en')
