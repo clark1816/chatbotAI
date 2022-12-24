@@ -6,5 +6,5 @@ ffmpeg-python==0.2.0
 wavio==0.0.4
 sounddevice==0.4.5
 scipy==1.8.1
-pytube == 12.1.2
+pytube==12.1.2
 ffmpeg-python==0.1.17
