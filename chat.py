@@ -1,7 +1,9 @@
 import openai
 import whisper
 from api_key import API_KEY
+from pytube import YouTube
 
+import ffmpeg
 import os
 import numpy as np
 import streamlit as st
@@ -10,14 +12,33 @@ import streamlit.components.v1 as components
 
 openai.api_key = st.secrets["API_KEY"]
 
-option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','AI Translator'),0)
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','Video to Text','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
     st.header(option)
     st.write('The current home for all things AI since other website has decided to shit the bed.')
     st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit. The AI translator is a work in progress and will be updated as I learn more about AI and Streamlit.')
     st.subheader('Earning call currently working')
     
-
+if option == 'Video to Text':
+    st.header(option)
+    st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit.')
+    yt_video_url = st.text_input('Enter the video URL')
+    start_time = st.number_input('Enter the start time in seconds')
+    end_time = st.number_input('Enter the end time in seconds')
+    st.button('Convert')
+    if yt_video_url:
+        youtube_video = YouTube(yt_video_url)
+        streams = youtube_video.streams.filter(only_audio=True)
+        stream = streams.first()
+        stream.download(filename='fed_meeting.mp4')
+        ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
+        #ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
+        #os.system('ffmpeg -ss 3 -i fed_meeting.mp4 -t 30 fed_meeting_trimmed.mp4')
+        model = whisper.load_model("base")
+        out = model.transcribe('fed_meeting.mp3')
+        st.write(out['text'])
+        
+    
 if option == 'Chat Helper Bot Ai':
     st.header(option)
     def open_file(filepath):
