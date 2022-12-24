@@ -8,7 +8,7 @@ import streamlit as st
 from io import BytesIO
 import streamlit.components.v1 as components
 
-openai.api_key = API_KEY
+openai.api_key = st.secrets["API_KEY"]
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
@@ -50,7 +50,10 @@ if option == 'Chat Helper Bot Ai':
         prompt = prompt + '\nAI:'
         response = gpt3_completion(prompt)
         st.write('AI:',response)
+        
         conversation.append('AI: %s' % response)
+        
+
         
         
 
@@ -86,10 +89,6 @@ if option == 'AI Translator':
         # wav_bytes contains audio data in format to be further processed
         # display audio data as received on the Python side
         st.audio(wav_bytes, format='audio/wav')
-        
-        
-        
-        
     # if record == True:
     #     model = whisper.load_model("base")
     #     out = model.transcribe('myvoice.mp3', language='en')
