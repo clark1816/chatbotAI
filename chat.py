@@ -32,8 +32,6 @@ if option == 'Video to Text':
         stream = streams.first()
         stream.download(filename='fed_meeting.mp4')
         out, err = ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run(capture_stdout=True, capture_stderr=True)
-        st.write(out)
-        st.write(err)
         #ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
         #ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
         #os.system('ffmpeg -ss 3 -i fed_meeting.mp4 -t 30 fed_meeting_trimmed.mp4')
