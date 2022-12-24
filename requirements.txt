@@ -8,4 +8,3 @@ sounddevice==0.4.5
 scipy==1.8.1
 pytube==12.1.2
 ffmpeg==1.4
-sudo apt-get install ffmpeg
