@@ -32,7 +32,7 @@ if option == 'Youtube Video Summarizer':
     end_time = st.number_input('Enter the end time in seconds')
     yt_video_url = st.text_input('Enter the video URL')
     st.button('Convert')
-    if yt_video_url and start_time and end_time is not None:
+    if yt_video_url and end_time is not None:
         
         youtube_video = YouTube(yt_video_url)
         streams = youtube_video.streams.filter(only_audio=True)
