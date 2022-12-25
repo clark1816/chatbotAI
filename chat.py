@@ -31,14 +31,47 @@ if option == 'Video to Text':
         streams = youtube_video.streams.filter(only_audio=True)
         stream = streams.first()
         stream.download(filename='fed_meeting.mp4')
-        out, err = ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run(capture_stdout=True, capture_stderr=True)
-        #ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
+        ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
         #ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
         #os.system('ffmpeg -ss 3 -i fed_meeting.mp4 -t 30 fed_meeting_trimmed.mp4')
         model = whisper.load_model("base")
-        out = model.transcribe('fed_meeting.mp3')
-        st.write(out['text'])
+        response = model.transcribe('fed_meeting.mp3')
+        transcript = response['text']
+        words = transcript.split(" ")
+        prompt = f"{transcript}\n\ntl;dr:"
+        #we need to chunk our data or we will get an error becasue open ai has a limit of 2048 characters
+        chunks = np.array_split(words, 10)
+        sentences = ' '.join(list(chunks[0]))
         
+        prompt = f"{sentences}\n\ntl;dr:"
+        response = openai.Completion.create(
+            engine="davinci",
+            prompt=prompt,
+            temperature=0.9,
+            max_tokens=150,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0.6,
+        )
+        response_text = response['choices'][0]['text']
+        summary_responses = []
+        for chunk in chunks: 
+            sentences = ' '.join(list(chunk))
+            prompt = f"{sentences}\n\ntl;dr:"
+            response = openai.Completion.create(
+                engine="davinci",
+                prompt=prompt,
+                temperature=0.9,
+                max_tokens=150,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0.6,
+            )
+            response_text = response['choices'][0]['text']
+            summary_responses.append(response_text)
+        full_summary = ' '.join(summary_responses)
+        st.header('Summary')
+        st.write(full_summary)
     
 if option == 'Chat Helper Bot Ai':
     st.header(option)
