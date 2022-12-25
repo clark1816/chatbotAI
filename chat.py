@@ -9,6 +9,7 @@ import numpy as np
 import streamlit as st
 from io import BytesIO
 import streamlit.components.v1 as components
+import numpy as np
 
 openai.api_key = st.secrets["API_KEY"]
 
