@@ -13,27 +13,27 @@ import numpy as np
 
 openai.api_key = st.secrets["API_KEY"]
 
-option = st.sidebar.selectbox("Which Dashboard?", ('Home','Video to Text','Chat Helper Bot Ai','AI Translator'),0)
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
     st.header(option)
     st.write('The current home for all things AI since other website has decided to shit the bed.')
     st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit. The AI translator is a work in progress and will be updated as I learn more about AI and Streamlit.')
     st.subheader('Earning call currently working')
     
-if option == 'Video to Text':
+if option == 'Youtube Video Summarizer':
     st.header(option)
-        #remove fed_meeting.mp4 and fed_meeting.mp3 if they exist
+    #remove fed_meeting.mp4 and fed_meeting.mp3 if they exist
     if os.path.exists('fed_meeting.mp4'):
         os.remove('fed_meeting.mp4')
     if os.path.exists('fed_meeting.mp3'):
         os.remove('fed_meeting.mp3')
     st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit.')
-    
     start_time = st.number_input('Enter the start time in seconds')
     end_time = st.number_input('Enter the end time in seconds')
     yt_video_url = st.text_input('Enter the video URL')
     st.button('Convert')
-    if yt_video_url:
+    if yt_video_url and start_time and end_time is not None:
+        
         youtube_video = YouTube(yt_video_url)
         streams = youtube_video.streams.filter(only_audio=True)
         stream = streams.first()
@@ -43,41 +43,36 @@ if option == 'Video to Text':
         #os.system('ffmpeg -ss 3 -i fed_meeting.mp4 -t 30 fed_meeting_trimmed.mp4')
         model = whisper.load_model("base")
         response = model.transcribe('fed_meeting.mp3')
+        st.write(response)
         transcript = response['text']
         words = transcript.split(" ")
-        prompt = f"{transcript}\n\ntl;dr:"
-        #we need to chunk our data or we will get an error becasue open ai has a limit of 2048 characters
-        chunks = np.array_split(words, 10)
+        chunks = np.array_split(words, 6)
         sentences = ' '.join(list(chunks[0]))
         
-        prompt = f"{sentences}\n\ntl;dr:"
-        response = openai.Completion.create(
-            engine="davinci",
-            prompt=prompt,
-            temperature=0.9,
-            max_tokens=150,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0.6,
-        )
-        response_text = response['choices'][0]['text']
         summary_responses = []
-        for chunk in chunks: 
+
+        for chunk in chunks:
+            
             sentences = ' '.join(list(chunk))
+
             prompt = f"{sentences}\n\ntl;dr:"
+
             response = openai.Completion.create(
-                engine="davinci",
+                engine="text-davinci-003", 
                 prompt=prompt,
-                temperature=0.9,
+                temperature=0.3, # The temperature controls the randomness of the response, represented as a range from 0 to 1. A lower value of temperature means the API will respond with the first thing that the model sees; a higher value means the model evaluates possible responses that could fit into the context before spitting out the result.
                 max_tokens=150,
-                top_p=1,
+                top_p=1, # Top P controls how many random results the model should consider for completion, as suggested by the temperature dial, thus determining the scope of randomness. Top P’s range is from 0 to 1. A lower value limits creativity, while a higher value expands its horizons.
                 frequency_penalty=0,
-                presence_penalty=0.6,
+                presence_penalty=1
             )
-            response_text = response['choices'][0]['text']
+
+            response_text = response["choices"][0]["text"]
             summary_responses.append(response_text)
-        full_summary = ' '.join(summary_responses)
-        st.header('Summary')
+
+        full_summary = "".join(summary_responses)
+
+        st.header("full summary")
         st.write(full_summary)
     
 if option == 'Chat Helper Bot Ai':
