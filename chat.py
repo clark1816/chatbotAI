@@ -22,6 +22,11 @@ if option == 'Home':
     
 if option == 'Video to Text':
     st.header(option)
+        #remove fed_meeting.mp4 and fed_meeting.mp3 if they exist
+    if os.path.exists('fed_meeting.mp4'):
+        os.remove('fed_meeting.mp4')
+    if os.path.exists('fed_meeting.mp3'):
+        os.remove('fed_meeting.mp3')
     st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit.')
     yt_video_url = st.text_input('Enter the video URL')
     start_time = st.number_input('Enter the start time in seconds')
