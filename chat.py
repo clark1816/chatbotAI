@@ -16,7 +16,7 @@ openai.api_key = st.secrets["API_KEY"]
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','AI Translator'),0)
 if option == 'Home':
     st.header(option)
-    st.write('The current home for all things AI since other website has decided to shit the bed.')
+    st.write('The current home for all things AI.')
     st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit. The AI translator is a work in progress and will be updated as I learn more about AI and Streamlit.')
     st.subheader('Earning call currently working')
     
