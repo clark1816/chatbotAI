@@ -1,6 +1,6 @@
 import openai
 import whisper
-from api_key import API_KEY
+
 from pytube import YouTube
 
 import ffmpeg
