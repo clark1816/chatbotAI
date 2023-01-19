@@ -13,7 +13,7 @@ import numpy as np
 
 openai.api_key = st.secrets["API_KEY"]
 
-option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','AI Translator'),0)
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','Book Summarizer','AI Translator'),0)
 if option == 'Home':
     st.header(option)
     st.write('The current home for all things AI.')
@@ -74,7 +74,38 @@ if option == 'Youtube Video Summarizer':
 
         st.header("full summary")
         st.write(full_summary)
-    
+if option == 'Book Summarizer':
+    st.header(option)
+    input = st.text_input('Enter words from the book that you want summarized')
+    summarize = st.button('Summarize') 
+    if summarize:
+        transcript = input
+        st.write (transcript)
+        words = transcript.split(" ")
+        chunks = np.array_split(words, 6)
+        sentences = ' '.join(list(chunks[0]))
+        summary_responses = []
+        for chunk in chunks:
+            
+            sentences = ' '.join(list(chunk))
+
+            prompt = f"{sentences}\n\ntl;dr:"
+
+            response = openai.Completion.create(
+                engine="text-davinci-003", 
+                prompt=prompt,
+                temperature=0.3, # The temperature controls the randomness of the response, represented as a range from 0 to 1. A lower value of temperature means the API will respond with the first thing that the model sees; a higher value means the model evaluates possible responses that could fit into the context before spitting out the result.
+                max_tokens=150,
+                top_p=1, # Top P controls how many random results the model should consider for completion, as suggested by the temperature dial, thus determining the scope of randomness. Top P’s range is from 0 to 1. A lower value limits creativity, while a higher value expands its horizons.
+                frequency_penalty=0,
+                presence_penalty=1
+            )
+
+            response_text = response["choices"][0]["text"]
+            summary_responses.append(response_text)
+
+        full_summary = "".join(summary_responses)
+        
 if option == 'Chat Helper Bot Ai':
     st.header(option)
     def open_file(filepath):
