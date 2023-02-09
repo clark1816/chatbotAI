@@ -83,7 +83,7 @@ if option == 'Book Summarizer':
         transcript = input
         st.write (transcript)
         words = transcript.split(" ")
-        chunks = np.array_split(words, 6)
+        chunks = np.array_split(words, 3)
         sentences = ' '.join(list(chunks[0]))
         summary_responses = []
         for chunk in chunks:
