@@ -15,10 +15,24 @@ openai.api_key = st.secrets["API_KEY"]
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','Book Summarizer'),0)
 if option == 'Home':
-    st.header(option)
-    st.write('The current home for all things AI.')
-    st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit. The AI translator is a work in progress and will be updated as I learn more about AI and Streamlit.')
-    st.subheader('Earning call currently working')
+    st.title("Streamlit App Homepage")
+    st.header("Welcome to the Streamlit App")
+
+    # Add a section for the video summarizer
+    st.header("Video Summarizer")
+    st.write("Our video summarizer helps you easily condense long videos into shorter, more manageable clips. You can specify the length of the summary, and our AI algorithms will automatically select the most important parts of the video to include. Whether you're looking to save time or simply want to get a quick overview of a video, our video summarizer is the perfect tool for the job.")
+    st.image("https://wtax-am.sagacom.com/files/2020/12/bored-work-12-2-20-shutterstock_1229760310.jpg")
+
+    # Add a section for the book summarizer
+    st.header("Book Summarizer")
+    st.write("Reading a book can be time-consuming, but with our book summarizer, you can quickly get the main ideas and key takeaways. Our AI algorithms analyze the text of the book and extract the most important information, so you can get a good understanding of the book's content without having to read every word. Whether you're short on time or simply prefer to get the gist of things, our book summarizer is here to help.")
+    st.image("https://i.pinimg.com/736x/d8/0e/25/d80e252b34c01df04574003a319ec283.jpg")
+
+    # Add a section for the chatbot helper AI
+    st.header("Chatbot Helper AI")
+    st.write("Need help with something? Our AI chatbot is here to assist you 24/7. Whether you have a question about how to use our app or just need some advice, our chatbot can help. With its natural language processing capabilities, you can have a conversation with our chatbot just as you would with a human, and it will do its best to provide you with the information you need. Don't hesitate to reach out and get the help you need.")
+    st.image("https://media.zenfs.com/en/euronews_uk_articles_973/9ee59a030ffefd7950ae1f11628604e7")
+
     
 if option == 'Youtube Video Summarizer':
     st.header(option)
