@@ -41,7 +41,7 @@ if option == 'Youtube Video Summarizer':
         os.remove('fed_meeting.mp4')
     if os.path.exists('fed_meeting.mp3'):
         os.remove('fed_meeting.mp3')
-    st.write('This is a work in progress and will be updated as I learn more about AI and Streamlit.')
+    st.write('To use this find a youtube video you would like a summary for then enter the url. Then enter a start time and end time in seconds and please be patient as I have not purchased a lot of cloud computing credits so it will take a little while to process your request. If you look at the top right hand corner you will see a running logo to indiciate the app is working correctly.')
     start_time = st.number_input('Enter the start time in seconds')
     end_time = st.number_input('Enter the end time in seconds')
     yt_video_url = st.text_input('Enter the video URL')
