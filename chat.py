@@ -46,7 +46,7 @@ if option == 'Youtube Video Summarizer':
         st.write(response)
         transcript = response['text']
         words = transcript.split(" ")
-        chunks = np.array_split(words, 6)
+        chunks = np.array_split(words, 3)
         sentences = ' '.join(list(chunks[0]))
         
         summary_responses = []
