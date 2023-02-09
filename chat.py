@@ -31,8 +31,8 @@ if option == 'Youtube Video Summarizer':
     start_time = st.number_input('Enter the start time in seconds')
     end_time = st.number_input('Enter the end time in seconds')
     yt_video_url = st.text_input('Enter the video URL')
-    st.button('Convert')
-    if yt_video_url and end_time is not None:
+    calculate = st.button("convert")
+    if calculate:
         
         youtube_video = YouTube(yt_video_url)
         streams = youtube_video.streams.filter(only_audio=True)
