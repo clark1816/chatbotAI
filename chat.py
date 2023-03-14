@@ -107,7 +107,7 @@ if option == 'Book Summarizer':
             prompt = f"{sentences}\n\ntl;dr:"
 
             response = openai.Completion.create(
-                engine="gpt-3.5-turbo", 
+                engine="text-davinci-003", 
                 prompt=prompt,
                 temperature=0.3, # The temperature controls the randomness of the response, represented as a range from 0 to 1. A lower value of temperature means the API will respond with the first thing that the model sees; a higher value means the model evaluates possible responses that could fit into the context before spitting out the result.
                 max_tokens=150,
@@ -132,7 +132,7 @@ if option == 'Chat Helper Bot Ai':
             return infile.read()
 
 
-    def gpt3_completion(prompt, engine='gpt-3.5-turbo', temp=.9, top_p=1.0, tokens=400, freq_pen=0.0, pres_pen=0.0, stop=['AI:', 'USER:']):
+    def gpt3_completion(prompt, engine='text-davinci-003', temp=.9, top_p=1.0, tokens=400, freq_pen=0.0, pres_pen=0.0, stop=['AI:', 'USER:']):
         prompt = prompt.encode(encoding='ASCII',errors='ignore').decode()
         response = openai.Completion.create(
             engine=engine,
