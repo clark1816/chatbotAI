@@ -56,7 +56,7 @@ if option == 'Youtube Video Summarizer':
         #ffmpeg.input('fed_meeting.mp4').output('fed_meeting.mp3',ss=start_time, to=end_time).run()
         #os.system('ffmpeg -ss 3 -i fed_meeting.mp4 -t 30 fed_meeting_trimmed.mp4')
         model = whisper.load_model("base")
-        response = model.transcribe('fed_meeting.mp3')
+        response = openai.Audio.transcribe("whisper-1", open("fed_meeting.mp3", "rb"))
         st.write(response)
         transcript = response['text']
         words = transcript.split(" ")
