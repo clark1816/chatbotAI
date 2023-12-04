@@ -1,6 +1,7 @@
 import openai
 import whisper
 
+
 from pytube import YouTube
 
 import ffmpeg
@@ -11,7 +12,7 @@ from io import BytesIO
 import streamlit.components.v1 as components
 import numpy as np
 
-openai.api_key = st.secrets["API_KEY"]
+openai.api_key = st.secrets.OPENAI_API_KEY
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','Book Summarizer'),0)
 if option == 'Home':
