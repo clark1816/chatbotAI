@@ -1,9 +1,4 @@
 import openai
-
-
-
-from pytube import YouTube
-
 import ffmpeg
 import os
 import numpy as np
