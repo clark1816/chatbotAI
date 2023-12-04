@@ -1,5 +1,5 @@
 import openai
-import whisper
+
 
 
 from pytube import YouTube
@@ -14,7 +14,7 @@ import numpy as np
 
 openai.api_key = st.secrets.OPENAI_API_KEY
 
-option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','Book Summarizer'),0)
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','Youtube Video Summarizer','Chat Helper Bot Ai','Book Summarizer'),3)
 if option == 'Home':
     st.title("Streamlit App Homepage")
     st.header("Welcome to the Streamlit App")
